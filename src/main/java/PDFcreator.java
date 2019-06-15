@@ -1,4 +1,8 @@
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.Map;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -10,14 +14,34 @@ import org.apache.pdfbox.pdmodel.font.encoding.WinAnsiEncoding;
 public class PDFcreator {
     private String filename;
     private LocalDate today = LocalDate.now();
+    private String outputPath;
+
+    public String getFilename() {
+        return filename;
+    }
+
+    public String getOutputPath() {
+        return outputPath;
+    }
+
+
+    public void setOutputPath(String outputPath) {
+        this.outputPath = outputPath;
+    }
 
 
     public PDFcreator() {
-        this.filename = "Project_Report_" + today.toString();
+
+        this.filename = "Project_Report_" + today.toString() + ".pdf";
+        Path currentRelativePath = Paths.get("");
+        this.outputPath = currentRelativePath.toAbsolutePath().toString();
+
     }
 
-    public PDFcreator(String filename) {
-        this.filename = filename;
+    public PDFcreator(String outputPath) {
+
+        this.outputPath = outputPath;
+        this.filename = "Project_Report_" + today.toString() + ".pdf";
     }
 
 
@@ -55,8 +79,16 @@ public class PDFcreator {
                 contentStream.endText();
             }
 
-               document.save("C:\\Users\\hans\\Desktop\\reporter-dane\\" + filename + ".pdf");
+               document.save(outputPath + "\\" + filename);
                document.close();
+
+
+               //test
+
+//              File pdfFile = new File(outputPath + "\\" + filename);
+//
+//              Desktop.getDesktop().open(pdfFile);
+
         }
 
 

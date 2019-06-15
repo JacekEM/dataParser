@@ -11,26 +11,21 @@ public class SheetLoader {
 
     private List<Path> sheetList = new ArrayList<>();
     private Pattern pattern = Pattern.compile(".*" + ".xls");
-
-//    public SheetLoader(String path) {
-//        this.path = path;
-//
-//    }
+    private String path;
 
 
     public List<Path> getSheetList() {
         return sheetList;
     }
 
+    public void setPath(String path) {
+        this.path = path;
+    }
+
 
     public void addSheetToList() throws Exception{
-        String path = "C:\\Users\\hans\\Desktop\\reporter-dane";
-        //String path = "C:\\Users\\hans\\Desktop\\reporter-dane\\reporter-dane\\2012\\01";
-//        Files.walk(Paths.get(path)).forEach(System.out::println);
+    //    String path = "C:\\Users\\hans\\Desktop\\reporter-dane";
 
-
-//        System.out.println("----------------------------");
-//        sheetList = Files.walk(Paths.get(path)).filter(Files::isRegularFile).filter(SheetPredicate).collect(Collectors.toList());
         sheetList = Files.walk(Paths.get(path))
                          .filter(Files::isRegularFile)
                          .filter(file -> {
@@ -39,6 +34,16 @@ public class SheetLoader {
                             return matcher.find();
                          })
                          .collect(Collectors.toList());
+
+
+        System.out.println("Processing files:");
+        for (Path p: sheetList ) {
+
+            System.out.println(p.toString());
+    }
+
+
+
     }
 
 }
