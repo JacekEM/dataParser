@@ -1,6 +1,6 @@
-
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.*;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,6 +8,7 @@ import java.nio.file.Path;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.*;
+
 import static java.util.stream.Collectors.toMap;
 
 
@@ -30,7 +31,7 @@ class SheetReader {
         for (Cell cell : row) {
 
             String text = formatter.formatCellValue(cell);
-            if (text.contains("Data")){
+            if (text.contains("Data")) {
                 this.dateColumn = cell.getColumnIndex();
             }
         }
@@ -42,7 +43,7 @@ class SheetReader {
         for (Cell cell : row) {
 
             String text = formatter.formatCellValue(cell);
-            if (text.contains("Czas")){
+            if (text.contains("Czas")) {
                 this.workTimeColumn = cell.getColumnIndex();
             }
         }
@@ -55,14 +56,14 @@ class SheetReader {
     }
 
 
-    Map<LocalDate,Double> getTopDays(Map<LocalDate,Double> map) {
+    Map<LocalDate, Double> getTopDays(Map<LocalDate, Double> map) {
 
         return map.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue())).limit(10)
                 .collect(toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2, LinkedHashMap::new));
 
     }
 
-    Map<String,Double> getTopMonth(Map<String,Double> map) {
+    Map<String, Double> getTopMonth(Map<String, Double> map) {
 
         return map.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
                 .collect(toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2, LinkedHashMap::new));
@@ -70,9 +71,9 @@ class SheetReader {
     }
 
 
-    Map<String,Double> getTopEmployees(Map<String,Double> map) {
+    Map<String, Double> getTopEmployees(Map<String, Double> map) {
 
-        return  map.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
+        return map.entrySet().stream().sorted(Collections.reverseOrder(Map.Entry.comparingByValue()))
                 .collect(toMap(e -> e.getKey(), e -> e.getValue(), (e1, e2) -> e2, LinkedHashMap::new));
 
     }
@@ -175,7 +176,7 @@ class SheetReader {
             inputStream.close();
         }
 
-     return workedPerEmployeeReport;
+        return workedPerEmployeeReport;
 
     }
 
@@ -286,11 +287,11 @@ class SheetReader {
 
                 }
 
-                StringBuilder projectData = new StringBuilder( "Employee name: " + employeeName + "\n"
-                                                             + "Total worked hours: " + totalWorkedHours + "\n"
-                                                             + "Project name: " + worksheetName + "\n"
-                                                             + "Project date: " + ldata.getMonth() + " " + ldata.getYear()
-                                                             + "\n"
+                StringBuilder projectData = new StringBuilder("Employee name: " + employeeName + "\n"
+                        + "Total worked hours: " + totalWorkedHours + "\n"
+                        + "Project name: " + worksheetName + "\n"
+                        + "Project date: " + ldata.getMonth() + " " + ldata.getYear()
+                        + "\n"
                 );
 
 

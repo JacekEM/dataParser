@@ -3,7 +3,7 @@ import java.util.function.Predicate;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-class SheetPredicate implements Predicate<Path>{
+class SheetPredicate implements Predicate<Path> {
 
     final Pattern pattern = Pattern.compile(".*" + ".xls");
 

@@ -1,9 +1,9 @@
-
-import org.knowm.xchart.*;
+import org.knowm.xchart.BitmapEncoder;
+import org.knowm.xchart.CategoryChart;
+import org.knowm.xchart.CategoryChartBuilder;
+import org.knowm.xchart.CategorySeries;
 import org.knowm.xchart.style.Styler;
 
-import java.awt.*;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -18,28 +18,29 @@ public class ChartCreator {
     private String byDayReportName = "days_by_hour_report.jpg";
 
 
-    public ChartCreator() {
+    ChartCreator() {
 
         Path currentRelativePath = Paths.get("");
         this.outputPath = currentRelativePath.toAbsolutePath().toString();
 
     }
 
-    public ChartCreator(String outputPath) {
+    ChartCreator(String outputPath) {
 
         this.outputPath = outputPath;
 
     }
 
-    public String getOutputPath() {
+
+    String getOutputPath() {
         return outputPath;
     }
 
-    public String getByMonthReportName() {
+    String getByMonthReportName() {
         return byMonthReportName;
     }
 
-    public String getByDayReportName() {
+    String getByDayReportName() {
         return byDayReportName;
     }
 
@@ -50,44 +51,44 @@ public class ChartCreator {
     }
 
 
-        public void saveTopTenDays(Map<LocalDate, Double> topDays) throws IOException {
+    void saveTopTenDays(Map<LocalDate, Double> topDays) throws IOException {
 
-            CategoryChart chart = new CategoryChartBuilder().width(1800).height(600).title("days").build();
+        CategoryChart chart = new CategoryChartBuilder().width(1800).height(600).title("days").build();
 
-            chart.getStyler().setChartTitleVisible(true);
-            chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
-            chart.getStyler().setDefaultSeriesRenderStyle(CategorySeries.CategorySeriesRenderStyle.Stick);
+        chart.getStyler().setChartTitleVisible(true);
+        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
+        chart.getStyler().setDefaultSeriesRenderStyle(CategorySeries.CategorySeriesRenderStyle.Stick);
 
-            List<String> xData = new ArrayList<>();
-            List<Double> yData = new ArrayList<>();
-            for ( Map.Entry<LocalDate, Double> entry: topDays.entrySet() ) {
-                xData.add(entry.getKey().toString());
-                yData.add(entry.getValue());
-            }
-
-            chart.addSeries("Worked hours by day", xData, yData);
-            BitmapEncoder.saveJPGWithQuality(chart, outputPath + "\\" + byDayReportName, 0.95f);
-
+        List<String> xData = new ArrayList<>();
+        List<Double> yData = new ArrayList<>();
+        for (Map.Entry<LocalDate, Double> entry : topDays.entrySet()) {
+            xData.add(entry.getKey().toString());
+            yData.add(entry.getValue());
         }
 
+        chart.addSeries("Worked hours by day", xData, yData);
+        BitmapEncoder.saveJPGWithQuality(chart, outputPath + "\\" + byDayReportName, 0.95f);
 
-        public void saveByMonth(Map<String, Double> topDays) throws IOException {
+    }
 
-            CategoryChart chart = new CategoryChartBuilder().width(1800).height(600).title("Monthly report")
-                    .xAxisTitle("Month").yAxisTitle("Hours").build();
 
-            chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
-            chart.getStyler().setHasAnnotations(true);
+    void saveByMonth(Map<String, Double> topDays) throws IOException {
 
-            List<String> xData = new ArrayList<>();
-            List<Double> yData = new ArrayList<>();
-            for ( Map.Entry<String, Double> entry: topDays.entrySet() ) {
-                xData.add(entry.getKey());
-                yData.add(entry.getValue());
-            }
-            chart.addSeries("worked hours by month",xData, yData);
-            BitmapEncoder.saveJPGWithQuality(chart, outputPath + "\\" + byMonthReportName, 0.95f);
+        CategoryChart chart = new CategoryChartBuilder().width(1800).height(600).title("Monthly report")
+                .xAxisTitle("Month").yAxisTitle("Hours").build();
 
+        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNW);
+        chart.getStyler().setHasAnnotations(true);
+
+        List<String> xData = new ArrayList<>();
+        List<Double> yData = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : topDays.entrySet()) {
+            xData.add(entry.getKey());
+            yData.add(entry.getValue());
         }
+        chart.addSeries("worked hours by month", xData, yData);
+        BitmapEncoder.saveJPGWithQuality(chart, outputPath + "\\" + byMonthReportName, 0.95f);
+
+    }
 
 }
