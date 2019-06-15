@@ -12,5 +12,9 @@ usage: Work Analyzer
  -s,--summary      prints project summary on terminal [Used with -p]
 
 ```
+Script expects .xls files formatted with the following patternn:
 
-Script expects .xls files.
+Data | Zadanie | Czas      
+------- | ---------------- | ---------- 
+Jacek  | ble | 10 
+Ania  | bleble | 12
